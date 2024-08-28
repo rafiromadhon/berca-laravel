@@ -1,0 +1,1 @@
+Hi, the account submission has been approve! Check it out!

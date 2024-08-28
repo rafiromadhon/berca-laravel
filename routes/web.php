@@ -17,11 +17,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\UserController;
 
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('login', [LoginController::class, 'index']);
 Route::post('auth', [LoginController::class, 'authenticate'])->name('login.auth');
 Route::get('logout', [LoginController::class, 'logout']);
@@ -35,9 +30,6 @@ Route::middleware(['login'])->group(function () {
         Route::get('acc-sub', function () {
             return view('pages.acc-sub');
         });
-    });
-
-    Route::group(['prefix' => 'menus'], function () {
         Route::get('unlock-user', function () {
             return view('pages.unlock-user');
         });

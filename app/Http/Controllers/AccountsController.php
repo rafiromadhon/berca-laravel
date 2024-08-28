@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\HelloMail;
 use DB;
 use Session;
 
@@ -91,6 +93,19 @@ class AccountsController extends Controller
             'updated_at' => DB::raw('CURRENT_TIMESTAMP'),
             'updated_by' => session('user_detail')->name,
         ]);
+
+        $get_cs = DB::connection('pgsql')
+        ->table('accounts')
+        ->select('app_users.email')
+        ->join('app_users', 'accounts.inserted_by', '=', 'app_users.name')
+        ->where('accounts.id', $id)
+        ->first();
+        if ($get_cs) {
+            $email   = $get_cs->email;
+            Mail::to($email)
+                ->send(new HelloMail());
+        }
+
         
         return response()->json(['info' => 'success']);
     }

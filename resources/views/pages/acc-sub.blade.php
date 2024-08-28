@@ -409,12 +409,12 @@ Account Submissions
 				success: (data) => {
 					alert("Data successfully approved!");
 					table.ajax.reload();
+					$('#modalApprove').modal('toggle');
 				},
 				error: function(data) {
 					alert("Data failed approved!");
 				}
 			});
-			$('#modalApprove').modal('toggle');
 		});
 
 	});
