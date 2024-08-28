@@ -289,6 +289,7 @@
 
 <script src="{{ url('js/oneui.app.js') }}"></script>
 <script src="{{ url('/js/laravel.app.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
 
 <script type="text/javascript">
 	$.ajaxSetup({

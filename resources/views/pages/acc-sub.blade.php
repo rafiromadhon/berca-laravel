@@ -356,31 +356,36 @@ Account Submissions
 
 			e.preventDefault();
 
-			let formData = new FormData(this);
-			formData.append('name', in_name)
-			formData.append('born_place', in_born_place)
-			formData.append('born_date', in_born_date)
-			formData.append('gender', in_gender)
-			formData.append('occupation', in_occupation)
-			formData.append('address', in_address)
-			formData.append('depo_amount', in_amount)
-			$.ajax({
-				type: 'POST',
-				url: "{{ url('data/insert-acc-sub') }}",
-				data: formData,
-				cache: false,
-				contentType: false,
-				processData: false,
-				success: (data) => {
-					alert("Account successfully stored!");
-					this.reset();
-					table.ajax.reload();
-				},
-				error: function(data) {
-					alert("Account failed stored!");
-				}
-			});
-			$('#modalInsert').modal('toggle');
+			if (in_name.indexOf(",") === -1 && in_name.indexOf(".") === -1) {
+				let formData = new FormData(this);
+				formData.append('name', in_name)
+				formData.append('born_place', in_born_place)
+				formData.append('born_date', in_born_date)
+				formData.append('gender', in_gender)
+				formData.append('occupation', in_occupation)
+				formData.append('address', in_address)
+				formData.append('depo_amount', in_amount)
+				$.ajax({
+					type: 'POST',
+					url: "{{ url('data/insert-acc-sub') }}",
+					data: formData,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: (data) => {
+						alert("Account successfully stored!");
+						this.reset();
+						table.ajax.reload();
+					},
+					error: function(data) {
+						alert("Account failed stored!");
+					}
+				});
+				$('#modalInsert').modal('toggle');
+			} else{
+				alert("Name should not contains degree/level");
+			}
+
 		});
 
 		$(document.body).on('click', '.modalApprove' ,function(){
