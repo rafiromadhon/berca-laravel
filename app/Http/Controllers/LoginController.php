@@ -24,7 +24,6 @@ class LoginController extends Controller
         $password = $request->input('password');
         
         $authenticate = false;
-        $user_data_from_api = "";
         $error = "User/Password wrong. Wrong password 3 times may cause your account locked.";
         
         $data_user     = DB::connection('pgsql')->table('app_users')->select('*')->where('username', $username)->first();
