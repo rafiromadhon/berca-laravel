@@ -53,7 +53,7 @@ Login
 	$(".btn-submit").click(function(e){
 		function CheckPassword(validatePass = '123') 
 		{ 
-			var pattern=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,30}$/;
+			let pattern=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,30}$/;
 			if(validatePass.match(pattern)) 
 			{ 
 				return true;
@@ -66,8 +66,8 @@ Login
 
 		e.preventDefault();
 
-		var username = $("input[name=username]").val();
-		var password = $("input[name=password]").val();
+		let username = $("input[name=username]").val();
+		let password = $("input[name=password]").val();
 
 		if (CheckPassword(password)) {
 			$.ajax({

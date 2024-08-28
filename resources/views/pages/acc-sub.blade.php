@@ -91,63 +91,63 @@ Account Submissions
 					<div class="block block-rounded block-link-pop m-0">
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Name</h4>
-							<input class="form-control font-size-sm form-control-alt" id="in-name" name="in-name">
+							<input class="form-control font-size-sm form-control-alt" id="in-name" name="in-name" required>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Born Place</h4>
-							<input class="form-control font-size-sm form-control-alt" id="in-born-place" name="in-born-place">
+							<input class="form-control font-size-sm form-control-alt" id="in-born-place" name="in-born-place" required>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Born Date</h4>
-							<input type="date" class="form-control font-size-sm form-control-alt" id="in-born-date" name="in-born-date">
+							<input type="date" class="form-control font-size-sm form-control-alt" id="in-born-date" name="in-born-date" required>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Gender</h4>
-							<select class="form-control font-size-sm form-control-alt" id="in-gender" name="in-gender">
+							<select class="form-control font-size-sm form-control-alt" id="in-gender" name="in-gender" required>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
 							</select>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Occupation</h4>
-							<select class="form-control font-size-sm form-control-alt" id="in-occupation" name="in-occupation">
+							<select class="form-control font-size-sm form-control-alt" id="in-occupation" name="in-occupation" required>
 							</select>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Province</h4>
-							<select class="form-control font-size-sm form-control-alt" id="in-province" name="in-province">
+							<select class="form-control font-size-sm form-control-alt" id="in-province" name="in-province" required>
 							</select>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Regency</h4>
-							<select class="form-control font-size-sm form-control-alt" id="in-regency" name="in-regency">
+							<select class="form-control font-size-sm form-control-alt" id="in-regency" name="in-regency" required>
 							</select>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">District</h4>
-							<select class="form-control font-size-sm form-control-alt" id="in-district" name="in-district">
+							<select class="form-control font-size-sm form-control-alt" id="in-district" name="in-district" required>
 							</select>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Village</h4>
-							<select class="form-control font-size-sm form-control-alt" id="in-village" name="in-village">
+							<select class="form-control font-size-sm form-control-alt" id="in-village" name="in-village" required>
 							</select>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Street</h4>
-							<input type="text" class="form-control font-size-sm form-control-alt" id="in-street" name="in-street">
+							<input type="text" class="form-control font-size-sm form-control-alt" id="in-street" name="in-street" required>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">RT</h4>
-							<input type="number" min="1" class="form-control font-size-sm form-control-alt" id="in-rt" name="in-rt">
+							<input type="number" min="1" class="form-control font-size-sm form-control-alt" id="in-rt" name="in-rt" required>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">RW</h4>
-							<input type="number" min="1" class="form-control font-size-sm form-control-alt" id="in-rw" name="in-rw">
+							<input type="number" min="1" class="form-control font-size-sm form-control-alt" id="in-rw" name="in-rw" required>
 						</div>
 						<div class="block-content block-content-full">
 							<h4 class="h5 mb-2">Deposit Amount</h4>
-							<input type="number" min="1" class="form-control font-size-sm form-control-alt" id="in-amount" name="in-amount">
+							<input type="number" min="1" class="form-control font-size-sm form-control-alt" id="in-amount" name="in-amount" required>
 						</div>
 					</div>
 				</div>
@@ -187,6 +187,18 @@ Account Submissions
 </script>
 
 <script>
+	function CheckName(text) 
+	{ 
+		let pattern=  /^[A-Za-z]{1,50}$/;
+		if(text.match(pattern)) 
+		{ 
+			return true;
+		}
+		else
+		{ 
+			return false;
+		}
+	}
 	$(document).ready(function(){
 		let table = $('#t-list-account').DataTable({
 			dom: 'Bfrtip',
@@ -356,7 +368,7 @@ Account Submissions
 
 			e.preventDefault();
 
-			if (in_name.indexOf(",") === -1 && in_name.indexOf(".") === -1) {
+			if (CheckName(in_name)) {
 				let formData = new FormData(this);
 				formData.append('name', in_name)
 				formData.append('born_place', in_born_place)
@@ -383,7 +395,7 @@ Account Submissions
 				});
 				$('#modalInsert').modal('toggle');
 			} else{
-				alert("Name should not contains degree/level");
+				alert("Name should contains letters only");
 			}
 
 		});
