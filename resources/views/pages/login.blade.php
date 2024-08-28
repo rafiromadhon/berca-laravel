@@ -26,7 +26,7 @@ Login
 					<input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
 				</div>
 				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block btn-submit" onclick="showSpinner()">Sign in <i id="spinner"></i></button>
+					<button type="button" class="btn btn-lg btn-primary btn-block btn-submit" onclick="showSpinner()">Sign in <i id="spinner"></i></button>
 				</div>
 			</form>
 		</div>
@@ -49,26 +49,44 @@ Login
 		$('#spinner').addClass("fa fa-fw fa-circle-notch fa-spin");
 	}
 
+
 	$(".btn-submit").click(function(e){
+		function CheckPassword(validatePass = '123') 
+		{ 
+			var pattern=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,30}$/;
+			if(validatePass.match(pattern)) 
+			{ 
+				return true;
+			}
+			else
+			{ 
+				return false;
+			}
+		}  
 
 		e.preventDefault();
 
 		var username = $("input[name=username]").val();
 		var password = $("input[name=password]").val();
 
-		$.ajax({
-			type:'POST',
-			url:"{{ route('login.auth') }}",
-			data:{username:username, password:password},
-			success:function(data){
-				$('#spinner').removeClass("fa fa-fw fa-circle-notch fa-spin");
-				if(data.auth){
+		if (CheckPassword(password)) {
+			$.ajax({
+				type:'POST',
+				url:"{{ route('login.auth') }}",
+				data:{username:username, password:password},
+				success:function(data){
+					$('#spinner').removeClass("fa fa-fw fa-circle-notch fa-spin");
+					if(data.auth){
 						window.location.replace( '{{ url('/') }}' );
-				}else {
-					alert (data.error)
+					}else {
+						alert (data.error)
+					}
 				}
-			}
-		});
+			});
+		} else{
+			alert("Password must contains uppercase & lowercase letter, special character (!/@/#/$/%/^/&/*), and number! min. length 8 character");
+		}
+
 
 	});
 </script>
