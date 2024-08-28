@@ -17,8 +17,8 @@ Login
 					Super Bank App<span class="font-w400"></span>
 				</h1>
 				<div class="form-group">
-					<label for="inputNIK" class="sr-only">NIK</label>
-					<input type="text" id="inputNIK" class="form-control" name="nik" placeholder="NIK" required autofocus>
+					<label for="inputUsername" class="sr-only">Username</label>
+					<input type="text" id="inputUsername" class="form-control" name="username" placeholder="Username" required autofocus>
 				</div>
 
 				<div class="form-group">
@@ -53,22 +53,17 @@ Login
 
 		e.preventDefault();
 
-		var nik = $("input[name=nik]").val();
+		var username = $("input[name=username]").val();
 		var password = $("input[name=password]").val();
 
 		$.ajax({
 			type:'POST',
 			url:"{{ route('login.auth') }}",
-			data:{nik:nik, password:password},
+			data:{username:username, password:password},
 			success:function(data){
 				$('#spinner').removeClass("fa fa-fw fa-circle-notch fa-spin");
-
 				if(data.auth){
-					// if (nik == '18900053') {
-					// 	alert("Anda tidak berhak mengakses web ini");
-					// } else{
 						window.location.replace( '{{ url('/') }}' );
-					// }
 				}else {
 					alert (data.error)
 				}

@@ -18,7 +18,6 @@ Account Submissions
 	td.details-control {
 		background: url('https://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
 		cursor: pointer;
-		/*        visibility: hidden;*/
 	}
 	tr.shown td.details-control {
 		background: url('https://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
@@ -54,59 +53,11 @@ Account Submissions
 </div>
 </div>
 
-<div class="modal fade p-0 bd-example-modal-lg" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="Modal Update Teknisi" aria-hidden="true">
-	<div class="modal-dialog modal-md">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">FORM UPDATE TEKNISI</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<form method="POST" enctype="multipart/form-data" id="form-update">
-				<div class="modal-body py-0">
-					<div class="block block-rounded block-link-pop m-0">
-						<div class="block-content block-content-full">
-							<h4 class="h5 mb-2">Witel</h4>
-							<div id="sel-witel"></div>
-						</div>
-						<div class="block-content block-content-full">
-							<h4 class="h5 mb-2">NIK</h4>
-							<input class="form-control font-size-sm form-control-alt" id="up-nik" name="up-nik">
-							<input class="form-control font-size-sm form-control-alt" id="up-nik-old" name="up-nik-old" hidden>
-						</div>
-						<div class="block-content block-content-full">
-							<h4 class="h5 mb-2">Nama</h4>
-							<input class="form-control font-size-sm form-control-alt" id="up-nama" name="up-nama">
-						</div>
-						<div class="block-content block-content-full">
-							<h4 class="h5 mb-2">Telp</h4>
-							<input class="form-control font-size-sm form-control-alt" id="up-telp" name="up-telp">
-						</div>
-						<div class="block-content block-content-full">
-							<h4 class="h5 mb-2">Email</h4>
-							<input class="form-control font-size-sm form-control-alt" id="up-email" name="up-email">
-						</div>
-						<div class="block-content block-content-full">
-							<h4 class="h5 mb-2">Posisi</h4>
-							<input class="form-control font-size-sm form-control-alt" id="up-posisi" name="up-posisi">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-					<button type="submit" id="btn-update" class="btn btn-primary">Update</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade p-0 bd-example-modal-lg" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="Modal Delete Teknisi" aria-hidden="true">
+<div class="modal fade p-0 bd-example-modal-lg" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="Modal Approve" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">DELETE TEKNISI</h5>
+				<h5 class="modal-title">APPROVE ACCOUNT</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -114,23 +65,23 @@ Account Submissions
 			<div class="modal-body py-0">
 				<div class="block block-rounded block-link-pop m-0">
 					<div class="block-content block-content-full">
-						<p>Yakin akan menghapus NIK <em id="em-nik">1234567890</em> - <em id="em-nama">Rafi Nur Romadhon</em>?</p>
+						<p>Are you sure want to Approve <em id="em-name">Rafi Nur Romadhon</em>?<em id="em-id" style="display: none;">123</em></p>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-				<button type="submit" id="btn-delete" class="btn btn-primary">Yakin</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Nope</button>
+				<button type="submit" id="btn-approve" class="btn btn-primary">Sure</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="modal fade p-0 bd-example-modal-lg" id="modalInsert" tabindex="-1" role="dialog" aria-labelledby="Modal Tambah Teknisi" aria-hidden="true">
+<div class="modal fade p-0 bd-example-modal-lg" id="modalInsert" tabindex="-1" role="dialog" aria-labelledby="Modal Insert" aria-hidden="true">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">FORM TAMBAH TEKNISI</h5>
+				<h5 class="modal-title">FORM ACCOUNT SUBMISSIONS</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -155,6 +106,11 @@ Account Submissions
 							<select class="form-control font-size-sm form-control-alt" id="in-gender" name="in-gender">
 								<option value="M">Male</option>
 								<option value="F">Female</option>
+							</select>
+						</div>
+						<div class="block-content block-content-full">
+							<h4 class="h5 mb-2">Occupation</h4>
+							<select class="form-control font-size-sm form-control-alt" id="in-occupation" name="in-occupation">
 							</select>
 						</div>
 						<div class="block-content block-content-full">
@@ -230,28 +186,32 @@ Account Submissions
 	});
 </script>
 
-<?php 
-$nikSession = 'xxx';
-?>
-
 <script>
 	$(document).ready(function(){
-		var table = $('#t-list-account').DataTable({
+		let table = $('#t-list-account').DataTable({
 			dom: 'Bfrtip',
 			buttons: [
-			{ 
-				extend: 'excel',
-			},
 			{
 				text: 'Tambah',
 				action: function ( e, dt, node, config ) {
 					let selProvince = document.getElementById('in-province');
 					$.ajax({
-						url: "{{ url('api/data/get-provinces') }}",
+						url: "{{ url('data/get-provinces') }}",
 						type: 'GET',
 						success: function(result){
-							for (var i = 0; i < result.length; i++) {
+							for (let i = 0; i < result.length; i++) {
 								selProvince.options[selProvince.options.length] = new Option(result[i].name, `${result[i].id}_${result[i].name}`);
+							}
+						}
+					});
+
+					let selOccupation = document.getElementById('in-occupation');
+					$.ajax({
+						url: "{{ url('data/get-occupations') }}",
+						type: 'GET',
+						success: function(result){
+							for (let i = 0; i < result['data'].length; i++) {
+								selOccupation.options[selOccupation.options.length] = new Option(result['data'][i].name, result['data'][i].id);
 							}
 						}
 					});
@@ -266,47 +226,71 @@ $nikSession = 'xxx';
 				header: true,
 				headerOffset: 57
 			},
-			ajax: '{{ url('api/data/acc-sub') }}',
+			ajax: '{{ url('data/acc-sub') }}',
 			columns: [
 			{
 				"orderable":      false,
 				"searchable": false,
 				render: function ( data, type, row, meta ) {
-					var num = meta.row;
+					let num = meta.row;
 					return  num+1;
 				},
 			},
 			{data: 'name', name: 'name', orderable: true},
 			{data: 'born_place', name: 'born_place', orderable: true},
 			{data: 'born_date', name: 'born_date', orderable: true},
-			{data: 'gender', name: 'gender', orderable: true},
-			{data: 'occupation', name: 'occupation', orderable: true},
+			{
+				data: 'gender', 
+				name: 'gender',
+				orderable: true,
+				render: function ( data, type, row ) {
+					if (row.gender === 'M') {
+						return `Male`;
+					}
+					return `Female`;
+				}
+			},
+			{data: 'occupation_name', name: 'occupation_name', orderable: true},
 			{data: 'address', name: 'address', orderable: true},
-			{data: 'depo_amount', name: 'depo_amount', orderable: true},
+			{
+				data: 'depo_amount', 
+				name: 'depo_amount',
+				orderable: true,
+				render: function ( data, type, row ) {
+					return `Rp${thousands_separators(row.depo_amount)},-`;
+				}
+			},
 			{
 				data: 'status',
 				name: 'status',
 				orderable: true,
+				className: 'text-center',
 				render: function ( data, type, row ) {
-					let status 	= row.status;
+					let id 			= row.id;
+					let name 		= row.name;
+					let status 		= row.status;
+					let user_type 	= '{{ session('user_detail')->user_type }}';
 					let ret         = '';
 
 					if (status == 0) {
 						ret += '<span class="badge badge-warning" style="font-size: 1em">Waiting for Approval</span>';
+						if (user_type === 'admin') {
+							ret += '<br><button type="button" data-id="'+ row.id +'" data-name="'+ row.name +'" class="btn btn-sm btn-info js-click-ripple-enabled modalApprove" style="margin-top: 5px;"><span class="click-ripple animate"></span>Approve</button>';
+						}
 					} else if(status == 1) {
 						ret += '<span class="badge badge-success" style="font-size: 1em">Approved</span>';
 					} else{
 						ret += '<span class="badge badge-success" style="font-size: 1em">Rejected</span>';
 					}
-                    // ret += '<button type="button" data-nik="'+ row.nik +'" data-nama="'+ row.nama +'" class="btn btn-sm btn-danger js-click-ripple-enabled modalDelete"><span class="click-ripple animate"></span>Delete</button>';
-                }
-            },
-            ],
-            order: [[ 0, "asc" ]],
-            pageLength: 100,
-            aoColumnDefs: [
-            ],
-        });
+					return ret;
+				}
+			},
+			],
+			order: [[ 0, "asc" ]],
+			pageLength: 100,
+			aoColumnDefs: [
+			],
+		});
 
 		table.on( 'draw', function () {
 			$('[data-toggle="tooltip"]').tooltip();
@@ -316,10 +300,10 @@ $nikSession = 'xxx';
 			const idProvince = $('#in-province').val();
 			let selRegency = document.getElementById('in-regency');
 			$.ajax({
-				url: `{{ url('api/data/get-regencies') }}/${idProvince}`,
+				url: `{{ url('data/get-regencies') }}/${idProvince}`,
 				type: 'GET',
 				success: function(result){
-					for (var i = 0; i < result.length; i++) {
+					for (let i = 0; i < result.length; i++) {
 						selRegency.options[selRegency.options.length] = new Option(result[i].name, `${result[i].id}_${result[i].name}`);
 					}
 				}
@@ -330,10 +314,10 @@ $nikSession = 'xxx';
 			const idRegency = $('#in-regency').val();
 			let selDistrict = document.getElementById('in-district');
 			$.ajax({
-				url: `{{ url('api/data/get-districts') }}/${idRegency}`,
+				url: `{{ url('data/get-districts') }}/${idRegency}`,
 				type: 'GET',
 				success: function(result){
-					for (var i = 0; i < result.length; i++) {
+					for (let i = 0; i < result.length; i++) {
 						selDistrict.options[selDistrict.options.length] = new Option(result[i].name, `${result[i].id}_${result[i].name}`);
 					}
 				}
@@ -344,170 +328,88 @@ $nikSession = 'xxx';
 			const idDistrict = $('#in-district').val();
 			let selVillage = document.getElementById('in-village');
 			$.ajax({
-				url: `{{ url('api/data/get-villages') }}/${idDistrict}`,
+				url: `{{ url('data/get-villages') }}/${idDistrict}`,
 				type: 'GET',
 				success: function(result){
-					for (var i = 0; i < result.length; i++) {
+					for (let i = 0; i < result.length; i++) {
 						selVillage.options[selVillage.options.length] = new Option(result[i].name, `${result[i].id}_${result[i].name}`);
 					}
 				}
 			});
 		});
 
-		$(document.body).on('click', '.modalUpdate' ,function(){
-			var u_witel 	= $(this).data('witel');
-			var u_nik 		= $(this).data('nik');
-			var u_nama 		= $(this).data('nama');
-			var u_telp 		= $(this).data('telp');
-			var u_email 	= $(this).data('email');
-			var u_posisi 	= $(this).data('posisi');
-			var html 		= '';
-
-			$.ajax({
-				url: "{{ url('indihome/data/list-witel-alita') }}",
-				type: 'GET',
-				dataType: "json",
-				success: function(result){
-					html += '<select id="up-witel" class="form-control font-size-sm form-control-alt" name="up-witel">';
-
-					for( var i = 0; i < result['data'].length; i++){
-						var witel = result['data'][i]['witel'];
-
-						if (witel == u_witel) {
-							html += '<option value="'+witel+'" selected>' + witel + '</option>';
-						} else{
-							html += '<option value="'+witel+'">' + witel + '</option>';							
-						}
-					}
-
-					html += '</select>';
-					$('#sel-witel').html(html);
-				}
-			});
-
-			$('#up-nik-old').val(u_nik);
-			$('#up-nik').val(u_nik);
-			$('#up-nama').val(u_nama);
-			$('#up-telp').val(u_telp);
-			$('#up-email').val(u_email);
-			$('#up-posisi').val(u_posisi);
-			$('#modalUpdate').modal({backdrop: 'static', keyboard: false});
-
-			console.log('terklik');
-		});
-
 		$('#form-insert').submit(function(e) {
-			var in_witel 	= ($('#in-witel').val() === '' ? '-' : $('#in-witel').val());;
-			var in_nik 		= ($('#in-nik').val() === '' ? '-' : $('#in-nik').val());
-			var in_nama 	= ($('#in-nama').val() === '' ? '-' : $('#in-nama').val());
-			var in_telp 	= ($('#in-telp').val() === '' ? '-' : $('#in-telp').val());
-			var in_email 	= ($('#in-email').val() === '' ? '-' : $('#in-email').val());
-			var in_posisi 	= ($('#in-posisi').val() === '' ? '-' : $('#in-posisi').val());
+			let in_name 		= ($('#in-name').val() === '' ? '-' : $('#in-name').val());
+			let in_born_place 	= ($('#in-born-place').val() === '' ? '-' : $('#in-born-place').val());
+			let in_born_date 	= ($('#in-born-date').val() === '' ? '-' : $('#in-born-date').val());
+			let in_gender 		= ($('#in-gender').val() === '' ? '-' : $('#in-gender').val());
+			let in_occupation 	= ($('#in-occupation').val() === '' ? '-' : $('#in-occupation').val());
+			let in_province 	= ($('#in-province').val() === '' ? '-' : $('#in-province').val());
+			let in_regency 		= ($('#in-regency').val() === '' ? '-' : $('#in-regency').val());
+			let in_district 	= ($('#in-district').val() === '' ? '-' : $('#in-district').val());
+			let in_village 		= ($('#in-village').val() === '' ? '-' : $('#in-village').val());
+			let in_street 		= ($('#in-street').val() === '' ? '-' : $('#in-street').val());
+			let in_rt 			= ($('#in-rt').val() === '' ? '-' : $('#in-rt').val());
+			let in_rw 			= ($('#in-rw').val() === '' ? '-' : $('#in-rw').val());
+			let in_amount 		= ($('#in-amount').val() === '' ? '-' : $('#in-amount').val());
+			let in_address 		= `${in_province}, ${in_regency}, ${in_district}, ${in_village}, ${in_street}, RT ${in_rt}/RW ${in_rw}`;
 
 			e.preventDefault();
 
-			var formData = new FormData(this);
-			formData.append('in_witel', in_witel)
-			formData.append('in_nik', in_nik)
-			formData.append('in_nama', in_nama)
-			formData.append('in_telp', in_telp)
-			formData.append('in_email', in_email)
-			formData.append('in_posisi', in_posisi)
+			let formData = new FormData(this);
+			formData.append('name', in_name)
+			formData.append('born_place', in_born_place)
+			formData.append('born_date', in_born_date)
+			formData.append('gender', in_gender)
+			formData.append('occupation', in_occupation)
+			formData.append('address', in_address)
+			formData.append('depo_amount', in_amount)
 			$.ajax({
 				type: 'POST',
-				url: "{{ url('/indihome/data/insert/teknisi-alita') }}",
+				url: "{{ url('data/insert-acc-sub') }}",
 				data: formData,
 				cache: false,
 				contentType: false,
 				processData: false,
 				success: (data) => {
-					$('#in-witel').val('');
-					$('#in-nik').val('');
-					$('#in-nama').val('');
-					$('#in-telp').val('');
-					$('#in-email').val('');
-					$('#in-posisi').val('');
-					alert("Data teknisi alita berhasil disimpan!");
+					alert("Account successfully stored!");
+					this.reset();
 					table.ajax.reload();
 				},
 				error: function(data) {
-					alert("Data teknisi alita gagal disimpan! Silakan coba lagi");
-					window.location.reload();
+					alert("Account failed stored!");
 				}
 			});
 			$('#modalInsert').modal('toggle');
 		});
 
-		$('#form-update').submit(function(e) {
+		$(document.body).on('click', '.modalApprove' ,function(){
+			let d_id 		= $(this).data('id');
+			let d_name 		= $(this).data('name');
 
-			var up_nik_old 	= $('#up-nik-old').val();
-			var up_witel 	= $('#up-witel').val();
-			var up_nik 		= $('#up-nik').val();
-			var up_nama 	= $('#up-nama').val();
-			var up_telp 	= $('#up-telp').val();
-			var up_email 	= $('#up-email').val();
-			var up_posisi 	= $('#up-posisi').val();
-
-			e.preventDefault();
-
-			var formData = new FormData(this);
-			formData.append('up_nik_old', up_nik_old)
-			formData.append('up_witel', up_witel)
-			formData.append('up_nik', up_nik)
-			formData.append('up_nama', up_nama)
-			formData.append('up_telp', up_telp)
-			formData.append('up_email', up_email)
-			formData.append('up_posisi', up_posisi)
-			$.ajax({
-				type: 'POST',
-				url: "{{ url('/indihome/data/update/teknisi-alita') }}",
-				data: formData,
-				cache: false,
-				contentType: false,
-				processData: false,
-				success: (data) => {
-					alert("Data teknisi alita berhasil diupdate!");
-					table.ajax.reload();
-				},
-				error: function(data) {
-					alert("Data teknisi alita gagal diupdate! Silakan coba lagi");
-					window.location.reload();
-				}
-			});
-			$('#modalUpdate').modal('toggle');
+			$('#em-name').html(d_name);
+			$('#em-id').html(d_id);
+			$('#modalApprove').modal({backdrop: 'static', keyboard: false});
 		});
 
-		$(document.body).on('click', '.modalDelete' ,function(){
-			var d_nik 		= $(this).data('nik');
-			var d_nama 		= $(this).data('nama');
-
-			$('#em-nik').html(d_nik);
-			$('#em-nama').html(d_nama);
-			$('#modalDelete').modal({backdrop: 'static', keyboard: false});
-		});
-
-		$(document.body).on('click', '#btn-delete' ,function(){
-			var d_nik 		= $('#em-nik').html();
+		$(document.body).on('click', '#btn-approve' ,function(){
+			let d_id 		= $('#em-id').html();
 
 			$.ajax({
 				type: 'GET',
-				url: "{{ url('/indihome/data/delete/teknisi-alita') }}" + "/" + d_nik,
+				url: "{{ url('data/approve-acc') }}" + "/" + d_id,
 				cache: false,
 				contentType: false,
 				processData: false,
 				success: (data) => {
-					alert("Data teknisi alita berhasil dihapus!");
-					// alert(data);
+					alert("Data successfully approved!");
 					table.ajax.reload();
 				},
 				error: function(data) {
-					alert("Data teknisi alita gagal dihapus! Silakan coba lagi");
-					window.location.reload();
+					alert("Data failed approved!");
 				}
 			});
-			$('#modalDelete').modal('toggle');
-
-			// alert("Anda akan mendelete NIK ini: "+d_nik);
+			$('#modalApprove').modal('toggle');
 		});
 
 	});

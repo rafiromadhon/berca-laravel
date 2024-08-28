@@ -19,7 +19,7 @@
 
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<link rel="shortcut icon" href="{{ asset('assets/ta-logo.png') }}">
+	<link rel="shortcut icon" href="">
 
 	<!-- Fonts and Styles -->
 	@yield('css_before')
@@ -213,7 +213,7 @@
 		<div class="content-side">
 
 			<ul class="nav-main">
-                <li class="nav-main-heading">MAIN MENU</li>
+				<li class="nav-main-heading">MAIN MENU</li>
 				<li class="nav-main-item">
 					<a class="nav-main-link{{ request()->is('/') ? ' active' : '' }}"
 						href="{{ url('/') }}">
@@ -223,14 +223,23 @@
 				</li>
 				<li class="nav-main-item">
 					<a class="nav-main-link{{ request()->is('menus/acc-sub') ? ' active' : '' }}"
-					href="{{ url('/menus/acc-sub') }}">
+						href="{{ url('/menus/acc-sub') }}">
 						<i class="nav-main-link-icon fa fa-user"></i>
 						<span class="nav-main-link-name">Account Submissions</span>
 					</a>
 				</li>
-            </ul>
-        </div>
-    </div>
+				@if (session('user_detail')->user_type == 'admin')
+				<li class="nav-main-item">
+					<a class="nav-main-link{{ request()->is('menus/unlock-user') ? ' active' : '' }}"
+						href="{{ url('/menus/unlock-user') }}">
+						<i class="nav-main-link-icon fa fa-unlock"></i>
+						<span class="nav-main-link-name">Unlock User</span>
+					</a>
+				</li>
+				@endif
+			</ul>
+		</div>
+	</div>
 </nav>
 <header id="page-header">
 	<div class="content-header" style="max-width: none">
@@ -247,38 +256,33 @@
 	</button>
 
 </div>
+
 <div class="d-flex align-items-center">
-<div class="dropdown d-inline-block ml-2">
-	<button type="button" class="btn btn-sm btn-dual d-flex align-items-center"
-	id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true"
-	aria-expanded="false">
-	<img class="rounded-circle" src="{{ asset('media/avatars/avatar10.jpg') }}"
-	alt="Header Avatar" style="width: 21px;">
-	<span class="d-none d-sm-inline-block ml-2"> nama </span>
-	<i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ml-1 mt-1"></i>
-</button>
-<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0 border-0"
-aria-labelledby="page-header-user-dropdown">
-<div class="p-3 text-center bg-primary-dark rounded-top">
-	<img class="img-avatar img-avatar48 img-avatar-thumb"
-	src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
-	<p class="mt-2 mb-0 text-white font-w500"> nik </p>
-	<p class="mb-0 text-white-50 font-size-sm">-</p>
-</div>
-<div class="p-2">
-	<a class="dropdown-item d-flex align-items-center justify-content-between"
-	href=" {{ url('logout') }} ">
-	<span class="font-size-sm font-w500">Log Out</span>
-</a>
+	<div class="dropdown d-inline-block ml-2">
+		<button type="button" class="btn btn-sm btn-dual d-flex align-items-center"
+		id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true"
+		aria-expanded="false">
+		<img class="rounded-circle" src="{{ asset('media/avatars/avatar10.jpg') }}"
+		alt="Header Avatar" style="width: 21px;">
+		<span class="d-none d-sm-inline-block ml-2"> {{ session('user_detail')->name }} </span>
+		<i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ml-1 mt-1"></i>
+	</button>
+	<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0 border-0"
+	aria-labelledby="page-header-user-dropdown">
+	<div class="p-3 text-center bg-primary-dark rounded-top">
+		<img class="img-avatar img-avatar48 img-avatar-thumb"
+		src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
+		<p class="mt-2 mb-0 text-white font-w500"> {{ session('user_detail')->name }} </p>
+		<p class="mb-0 text-white-50 font-size-sm">{{ session('user_detail')->email }}</p>
+	</div>
+	<div class="p-2">
+		<a class="dropdown-item d-flex align-items-center justify-content-between"
+		href=" {{ url('logout') }} ">
+		<span class="font-size-sm font-w500">Log Out</span>
+	</a>
 </div>
 </header>
 @yield('content')
-
-<?php
-echo "<pre>";
-print_r(session()->all());
-echo "</pre>";
-?>
 
 </main>
 </div>
